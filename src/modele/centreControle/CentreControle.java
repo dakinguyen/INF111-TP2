@@ -3,6 +3,8 @@ package modele.centreControle;
 import modele.communication.*;
 import modele.satelliteRelai.*;
 
+
+/* DQ
 public class CentreControle extends TransporteurMessage {
 	
 	public CentreControle() {
@@ -17,3 +19,4 @@ public class CentreControle extends TransporteurMessage {
 		
 	}
 }
+*/
