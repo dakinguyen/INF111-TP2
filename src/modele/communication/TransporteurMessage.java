@@ -1,28 +1,28 @@
 package modele.communication;
 /**
- * Classe qui implémente le protocol de communication entre le Rover
- * et le Centre d'opération.
+ * Classe qui implÃ©mente le protocol de communication entre le Rover
+ * et le Centre d'opÃ©ration.
  * 
- * Il se base sur une interprétation libre du concept de Nack:
+ * Il se base sur une interprÃ©tation libre du concept de Nack:
  * 	https://webrtcglossary.com/nack/
  *  
- * Les messages envoyés sont mémorisé. À l'aide du compte unique
+ * Les messages envoyÃ©s sont mÃ©morisÃ©. Ã€ l'aide du compte unique
  * le transporteur de message peut identifier les Messages manquant
- * dans la séquence et demander le renvoi d'un Message à l'aide du Nack.
+ * dans la sÃ©quence et demander le renvoi d'un Message Ã  l'aide du Nack.
  * 
- * Pour contourner la situation ou le Nack lui-même est perdu, le Nack
- * est renvoyé periodiquement, tant que le Message manquant n'a pas été reçu.
+ * Pour contourner la situation ou le Nack lui-mÃªme est perdu, le Nack
+ * est renvoyÃ© periodiquement, tant que le Message manquant n'a pas Ã©tÃ© reÃ§u.
  * 
- * C'est également cette classe qui gère les comptes unique.
+ * C'est Ã©galement cette classe qui gÃ¨re les comptes unique.
  * 
- * Les messages reçu sont mis en file pour être traité.
+ * Les messages reÃ§u sont mis en file pour Ãªtre traitÃ©.
  * 
- * La gestion des messages reçu s'effectue comme une tâche s'exécutant indépendamment (Thread)
+ * La gestion des messages reÃ§u s'effectue comme une tÃ¢che s'exÃ©cutant indÃ©pendamment (Thread)
  * 
- * Quelques détails:
- *  - Le traitement du Nack a priorité sur tout autre message.
- *  - Un message NoOp est envoyé périodiquement pour s'assurer de maintenir
- *    une communication active et identifier les messages manquants en bout de séquence.
+ * Quelques dÃ©tails:
+ *  - Le traitement du Nack a prioritÃ© sur tout autre message.
+ *  - Un message NoOp est envoyÃ© pÃ©riodiquement pour s'assurer de maintenir
+ *    une communication active et identifier les messages manquants en bout de sÃ©quence.
  * 
  * Services offerts:
  *  - TransporteurMessage
@@ -37,11 +37,14 @@ import java.util.ArrayList;
 import java.util.Vector;
 import java.util.concurrent.locks.ReentrantLock;
 
+import modele.rover.Rover;
+import modele.centreControle.CentreControle;
+
 public abstract class TransporteurMessage extends Thread {
 	
 	// compteur de message
 	protected CompteurMessage compteurMsg;
-	// lock qui protège la liste de messages reçu
+	// lock qui protÃ¨ge la liste de messages reÃ§u
 	private ReentrantLock lock = new ReentrantLock();
 	
 	/**
@@ -52,10 +55,10 @@ public abstract class TransporteurMessage extends Thread {
 	}
 	
 	/**
-	 * Méthode gérant les messages reçu du satellite. La gestion se limite
-	 * à l'implémentation du Nack, les messages spécialisé sont envoyés
-	 * aux classes dérivés
-	 * @param msg, message reçu
+	 * MÃ©thode gÃ©rant les messages reÃ§u du satellite. La gestion se limite
+	 * Ã  l'implÃ©mentation du Nack, les messages spÃ©cialisÃ© sont envoyÃ©s
+	 * aux classes dÃ©rivÃ©s
+	 * @param msg, message reÃ§u
 	 */
 	public void receptionMessageDeSatellite(Message msg) {
 		lock.lock();
@@ -82,7 +85,7 @@ public abstract class TransporteurMessage extends Thread {
 
 	@Override
 	/**
-	 * Tâche effectuant la gestion des messages reçu
+	 * TÃ¢che effectuant la gestion des messages reÃ§u
 	 */
 	public void run() {
 		
@@ -93,10 +96,11 @@ public abstract class TransporteurMessage extends Thread {
 			lock.lock();
 			
 			try {
-				/*
+				/* DQ
 				Vector<Message> msgAEnvoyer = new Vector<Message>();
 				boolean nackEnvoye = false;
-				int compteurMsg = 0;
+				CompteurMessage compteurMsg = new CompteurMessage();
+				int compteur;
 				
 				while (msgAEnvoyer.size() > 0 && nackEnvoye == false) {
 					Message aGerer = msgAEnvoyer.get(compteCourant);
@@ -110,29 +114,29 @@ public abstract class TransporteurMessage extends Thread {
 						}
 						
 						//peek le message a envoyer
-						envoyerMessage(aGerer);
+						Rover.envoyerMessage(aGerer);
 						
 					} else if (compteCourant != (msgAEnvoyer.get(compteCourant)).getCompte()) {
 						Nack msgManquant = new Nack(compteCourant);
 						
-						envoyerMessage(msgManquant);
+						Rover.envoyerMessage(msgManquant);
 						nackEnvoye = true;
 						
 					} else if (compteCourant > (msgAEnvoyer.get(compteCourant)).getCompte()) {
 						msgAEnvoyer.remove(compteCourant);
 						
 					} else {
-						gestionnaireMessage(aGerer);
+						Rover.gestionnaireMessage(aGerer);
 						//defile le message
 						compteCourant++;
 					}
 					
-					compteurMsg++;
-					NoOp msgNoOp = new NoOp(compteurMsg);
-					envoyerMessage(msgNoOp);
+					compteur = compteurMsg.getCompteActuel();
+					NoOp msgNoOp = new NoOp(compteur);
+					CentreControle.envoyerMessage(msgNoOp);
 				}
 				*/
-			
+				
 			}finally{
 				lock.unlock();
 			}
@@ -147,14 +151,14 @@ public abstract class TransporteurMessage extends Thread {
 	}
 
 	/**
-	 * méthode abstraite utilisé pour envoyer un message
-	 * @param msg, le message à envoyer
+	 * mÃ©thode abstraite utilisÃ© pour envoyer un message
+	 * @param msg, le message Ã  envoyer
 	 */
 	abstract protected void envoyerMessage(Message msg);
 
 	/**
-	 * méthode abstraite utilisé pour effectuer le traitement d'un message
-	 * @param msg, le message à traiter
+	 * mÃ©thode abstraite utilisÃ© pour effectuer le traitement d'un message
+	 * @param msg, le message Ã  traiter
 	 */
 	abstract protected void gestionnaireMessage(Message msg);
 
