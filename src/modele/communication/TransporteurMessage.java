@@ -61,6 +61,7 @@ public abstract class TransporteurMessage extends Thread {
 		lock.lock();
 		
 		try {
+			/* DQ
 			ArrayList<Message> msgRecu = new ArrayList<Message>();
 			
 			if (msg instanceof Nack) {
@@ -73,7 +74,7 @@ public abstract class TransporteurMessage extends Thread {
 				
 				msgRecu.add(msg.getCompte(), msg);
 			}
-			
+			*/
 		}finally {
 			lock.unlock();
 		}
@@ -92,7 +93,7 @@ public abstract class TransporteurMessage extends Thread {
 			lock.lock();
 			
 			try {
-
+				/*
 				Vector<Message> msgAEnvoyer = new Vector<Message>();
 				boolean nackEnvoye = false;
 				int compteurMsg = 0;
@@ -130,6 +131,7 @@ public abstract class TransporteurMessage extends Thread {
 					NoOp msgNoOp = new NoOp(compteurMsg);
 					envoyerMessage(msgNoOp);
 				}
+				*/
 			
 			}finally{
 				lock.unlock();
