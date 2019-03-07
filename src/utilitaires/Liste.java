@@ -1,5 +1,5 @@
 package utilitaires;
-
+/* -- DQ
 public class Liste {
 
 	private Object[] tab;
@@ -51,3 +51,4 @@ public class Liste {
 		}
 	}
 }
+*/
