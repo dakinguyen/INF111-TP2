@@ -48,13 +48,14 @@ public class SatelliteRelai extends Thread{
 		lock.lock();
 		
 		try {
+			/*
 			Liste centrOp = new Liste();
 			double nbAlea = rand.nextDouble();
 			
 			if (nbAlea > PROBABILITE_PERTE_MESSAGE) {
 				centrOp.ajouterElement(msg);
 			}
-			
+			*/
 		}finally {
 			lock.unlock();
 		}
@@ -68,13 +69,14 @@ public class SatelliteRelai extends Thread{
 		lock.lock();
 		
 		try {
+			/*
 			Liste rover = new Liste();
 			double nbAlea = rand.nextDouble();
 			
 			if (nbAlea > PROBABILITE_PERTE_MESSAGE) {
 				rover.ajouterElement(msg);
 			}
-			
+			*/
 		}finally {
 			lock.unlock();
 		}
@@ -84,7 +86,7 @@ public class SatelliteRelai extends Thread{
 	public void run() {
 		
 		while(true) {
-			
+			/*
 			try {
 				rover.enleverElement();
 			} catch (Exception e) {
@@ -97,7 +99,7 @@ public class SatelliteRelai extends Thread{
 				System.out.println("La liste centrOp est vide!");
 			}
 
-
+			*/
 			// attend le prochain cycle
 			try {
 				Thread.sleep(TEMPS_CYCLE_MS);
