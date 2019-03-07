@@ -1,5 +1,6 @@
 package utilitaires;
-/* DQ
+// remove DQ in file name to execute
+
 public class Vect2D {
 	
 	private double x;
@@ -119,4 +120,4 @@ public class Vect2D {
 		return valid;
 	}
 }
-*/
+
