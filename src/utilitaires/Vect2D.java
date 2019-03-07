@@ -1,5 +1,5 @@
 package utilitaires;
-
+/* DQ
 public class Vect2D {
 	
 	private double x;
@@ -119,3 +119,4 @@ public class Vect2D {
 		return valid;
 	}
 }
+*/
