@@ -65,7 +65,8 @@ public class SatelliteRelai extends Thread{
 
 			if (prob > PROBABILITE_PERTE_MESSAGE) {
 				fileCentre.ajouterElement(msg);
-				System.out.println("message vers centre: " + msg.getCompte());
+				System.out.println("Satellite vers centre: " + msg.getCompte());
+				centreControle.receptionMessageDeSatellite(msg);
 			}
 			
 		}finally {
@@ -90,7 +91,8 @@ public class SatelliteRelai extends Thread{
 
 			if (prob > PROBABILITE_PERTE_MESSAGE) {
 				fileRover.ajouterElement(msg);
-				System.out.println("message vers rover: " + msg.getCompte());
+				System.out.println("Satellite vers rover: " + msg.getCompte());
+				rover.receptionMessageDeSatellite(msg);
 			}
 			
 		}finally {
@@ -107,8 +109,12 @@ public class SatelliteRelai extends Thread{
 			 * (5.3) Insérer votre code ici 
 			 */
 			try{
-				fileRover.enleverElement();
-				fileCentre.enleverElement();
+				Message msgRover = fileRover.enleverElement();
+				System.out.println("Satellite : " + msgRover);
+				rover.receptionMessageDeSatellite(msgRover);
+				Message msgCentre = fileCentre.enleverElement();
+				System.out.println("Satellite : " + msgCentre);
+				centreControle.receptionMessageDeSatellite(msgCentre);
 			}catch (Exception e) {
 				System.out.println(e.getMessage());
 			}

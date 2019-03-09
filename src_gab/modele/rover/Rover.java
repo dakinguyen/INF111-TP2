@@ -14,6 +14,7 @@ public class Rover extends TransporteurMessage {
 
     @Override
     public void envoyerMessage(Message msg) {
+        System.out.println("Rover vers satellite: " + msg.getCompte());
         satellite.envoyerMessageVersCentrOp(msg);
         ajouteEnvoye(msg);
     }

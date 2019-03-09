@@ -1,5 +1,7 @@
 package utilitaires;
 
+import modele.communication.Message;
+
 /**
  *
  */
@@ -8,10 +10,10 @@ public class FileSimple {
     private int nbElement = 0;
 
     class Noeud {
-        private Object element;
+        private Message element;
         private Noeud suivant = null;
 
-        public Noeud(Object element) {
+        public Noeud(Message element) {
             this.element = element;
         }
     }
@@ -26,7 +28,7 @@ public class FileSimple {
      * et ce dernier est son suivant
      * @param element a ajouter
      */
-    public void ajouterElement(Object element) {
+    public void ajouterElement(Message element) {
         Noeud nouveau = new Noeud(element);
 
         nouveau.suivant = this.tete;
@@ -40,7 +42,7 @@ public class FileSimple {
      * @return l'element enleve
      * @throws Exception si la file est vide
      */
-    public Object enleverElement() throws NullPointerException {
+    public Message enleverElement() throws NullPointerException {
         if (estVide()) {
             throw new NullPointerException("La file est vide");
         }
