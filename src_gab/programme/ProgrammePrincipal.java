@@ -25,6 +25,7 @@ public class ProgrammePrincipal {
 
 		for (int i =0; i < 10; i++) {
 			centreControle.envoyerMessage(new Message(i));
+			rover.envoyerMessage(new Message(i));
 
 
 		}

@@ -66,7 +66,6 @@ public class SatelliteRelai extends Thread{
 			if (prob > PROBABILITE_PERTE_MESSAGE) {
 				fileCentre.ajouterElement(msg);
 				System.out.println("Satellite vers centre: " + msg.getCompte());
-				centreControle.receptionMessageDeSatellite(msg);
 			}
 			
 		}finally {
@@ -92,7 +91,6 @@ public class SatelliteRelai extends Thread{
 			if (prob > PROBABILITE_PERTE_MESSAGE) {
 				fileRover.ajouterElement(msg);
 				System.out.println("Satellite vers rover: " + msg.getCompte());
-				rover.receptionMessageDeSatellite(msg);
 			}
 			
 		}finally {

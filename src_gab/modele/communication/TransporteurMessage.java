@@ -71,6 +71,8 @@ public abstract class TransporteurMessage extends Thread {
 
 			if(msg instanceof Nack) {
 				messageRecu.add(0, msg);
+				System.out.println("Nack placed");
+
 
 			} else {
 				int size = messageRecu.size();
@@ -87,14 +89,19 @@ public abstract class TransporteurMessage extends Thread {
 				}
 
 				while (!(placed) && index > 0 ) {
+					System.out.println("index: " + index + " " + this);
 					if (messageRecu.get(index - 1) instanceof Nack) {
-						messageRecu.add(index + 1, msg);
-					} else if (msg.getCompte() > messageRecu.get(index).getCompte() ){
+						messageRecu.add(index, msg);
+					} else if (msg.getCompte() > messageRecu.get(index - 1).getCompte() ){
 						placed = true;
-						messageRecu.add(index + 1, msg);
+						messageRecu.add(index, msg);
 					} else {
 						index --;
 					}
+				}
+				if (!(placed) && index == 0) {
+					messageRecu.add(0, msg);
+					placed = true;
 				}
 			}
 			
@@ -135,11 +142,10 @@ public abstract class TransporteurMessage extends Thread {
 						boolean found = false;
 						int index = 0;
 						int size = messageEnvoye.size();
-						System.out.println(size + " " + compteManquant);
 
 						for (int i = 0; i < size; i++) {
 							if (found) {
-								messageEnvoye.remove(i);
+								messageEnvoye.remove(index + 1);
 							}else if (messageEnvoye.get(i) instanceof Nack) {
 								messageEnvoye.remove(i);
 							}else if (compteManquant == messageEnvoye.get(i).getCompte()) {
