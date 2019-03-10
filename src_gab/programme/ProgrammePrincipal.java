@@ -23,17 +23,19 @@ public class ProgrammePrincipal {
 		satellite.lierCentrOp(centreControle);
 		satellite.lierRover(rover);
 
+		for (int i =0; i < 10; i++) {
+			centreControle.envoyerMessage(new Message(i));
+
+
+		}
+
 		centreControle.start();
 		rover.start();
 
 		satellite.start();
 
 
-		for (int i =0; i < 10; i++) {
-			centreControle.envoyerMessage(new Message(i));
 
-
-		}
 
 
 

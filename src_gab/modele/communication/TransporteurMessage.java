@@ -78,7 +78,6 @@ public abstract class TransporteurMessage extends Thread {
 				int index =size;
 
 				if(messageRecu.isEmpty()) {
-					System.out.println("first add");
 					messageRecu.add(msg);
 					placed = true;
 				} else if (messageRecu.get(size - 1).getCompte() < msg.getCompte() &&
@@ -87,8 +86,8 @@ public abstract class TransporteurMessage extends Thread {
 					placed = true;
 				}
 
-				while (!placed || index > 0 ) {
-					if (messageRecu.get(index) instanceof Nack) {
+				while (!(placed) && index > 0 ) {
+					if (messageRecu.get(index - 1) instanceof Nack) {
 						messageRecu.add(index + 1, msg);
 					} else if (msg.getCompte() > messageRecu.get(index).getCompte() ){
 						placed = true;
@@ -123,7 +122,7 @@ public abstract class TransporteurMessage extends Thread {
 				 * (6.3.4) Insérer votre code ici 
 				 */
 
-				System.out.println("Compte courant: " + compteCourant + " " + this);
+				System.out.println("Compte courant: " + compteCourant );
 				System.out.println(messageRecu.size());
 
 				while(!(messageRecu.isEmpty()) && !nackSent) {
@@ -136,6 +135,7 @@ public abstract class TransporteurMessage extends Thread {
 						boolean found = false;
 						int index = 0;
 						int size = messageEnvoye.size();
+						System.out.println(size + " " + compteManquant);
 
 						for (int i = 0; i < size; i++) {
 							if (found) {
@@ -152,7 +152,7 @@ public abstract class TransporteurMessage extends Thread {
 						messageRecu.remove(0);
 
 					} else if (msg.getCompte() > compteCourant) {
-						System.out.println("Missing: " + (msg.getCompte() - 1));
+						System.out.println("Missing: " + compteCourant);
 						envoyerMessage(new Nack(compteCourant));
 						nackSent =true;
 
