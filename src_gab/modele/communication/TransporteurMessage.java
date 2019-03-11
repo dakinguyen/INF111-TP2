@@ -204,13 +204,14 @@ public abstract class TransporteurMessage extends Thread {
 	 */
 	abstract protected void gestionnaireMessage(Message msg);
 
+	/**
+	 * Ajoute le message au vecteur
+	 * @param msg a ajoute
+	 */
 	public void ajouteEnvoye(Message msg) {
 		messageEnvoye.add(0, msg);
 	}
 
-	public void ajouteRecu(Message msg) {
-		messageRecu.add(msg);
-	}
 
 	
 
