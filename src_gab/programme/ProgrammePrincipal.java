@@ -3,7 +3,7 @@ package programme;
 import java.io.IOException;
 
 import modele.centreControle.CentreControle;
-import modele.communication.Message;
+import modele.communication.*;
 import modele.rover.Rover;
 import modele.satelliteRelai.SatelliteRelai;
 import utilitaires.*;
@@ -16,19 +16,26 @@ public class ProgrammePrincipal {
 	 * @param args, pas utilisé
 	 */
 	public static void main(String[] args){
-	
+
+		CompteurMessage compteurMsg = new CompteurMessage();
+
 		SatelliteRelai satellite = new SatelliteRelai();
 		CentreControle centreControle = new CentreControle(satellite);
-		Rover rover = new Rover(satellite);
+		Rover rover = new Rover(satellite, new Vect2D(0,0));
 		satellite.lierCentrOp(centreControle);
 		satellite.lierRover(rover);
 
-		for (int i =0; i < 10; i++) {
-			centreControle.envoyerMessage(new Message(i));
-			rover.envoyerMessage(new Message(i));
 
+		Commande msgCmd = null;
+		msgCmd = new Commande(compteurMsg.getCompteActuel(),new Vect2D(5,10));
+		centreControle.envoyerMessage(msgCmd);
 
-		}
+		msgCmd = new Commande(compteurMsg.getCompteActuel(),new Vect2D(3,12));
+		centreControle.envoyerMessage(msgCmd);
+
+		msgCmd = new Commande(compteurMsg.getCompteActuel(),new Vect2D(10,10));
+		centreControle.envoyerMessage(msgCmd);
+
 
 		centreControle.start();
 		rover.start();

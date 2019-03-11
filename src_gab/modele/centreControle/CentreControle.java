@@ -15,7 +15,6 @@ public class CentreControle extends TransporteurMessage {
 
     @Override
     public void envoyerMessage(Message msg) {
-        System.out.println("Centre vers satellite: " + msg.getCompte());
         satellite.envoyerMessageVersRover(msg);
         ajouteEnvoye(msg);
     }

@@ -129,9 +129,6 @@ public abstract class TransporteurMessage extends Thread {
 				 * (6.3.4) Insérer votre code ici 
 				 */
 
-				System.out.println("Compte courant: " + compteCourant );
-				System.out.println(messageRecu.size());
-
 				while(!(messageRecu.isEmpty()) && !nackSent) {
 					Message msg = messageRecu.get(0);
 
@@ -155,6 +152,10 @@ public abstract class TransporteurMessage extends Thread {
 						}
 						Message toSend = messageEnvoye.get(index);
 						envoyerMessage(toSend);
+						messageRecu.remove(0);
+
+					} else if (msg.getCompte() == 9999) {
+						System.out.println("End");
 						messageRecu.remove(0);
 
 					} else if (msg.getCompte() > compteCourant) {

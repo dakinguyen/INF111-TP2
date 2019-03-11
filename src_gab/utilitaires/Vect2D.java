@@ -62,7 +62,7 @@ public class Vect2D {
      * @return la valeur de l'angle
      */
     public double getAngle() {
-        double angle = Math.atan(this.long_y/this.long_x);
+        double angle = Math.atan2(this.long_y, this.long_x);
         return angle;
     }
 
