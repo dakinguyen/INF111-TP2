@@ -1,10 +1,21 @@
 package utilitaires;
 
-import modele.communication.Message;
-
 /**
+ * Cette classe permet la creation d'une file
+ * 
+ * Services offerts:
+ * - ajouterElement
+ * - enleverElement
+ * - estVide
+ * - getNbElem
+ * 
+ * @author Dat Quang Nguyen, Sara Nguyen, Emerick Paul, Gabriel Somma
+ * @version Hiver 2019
  *
  */
+
+import modele.communication.Message;
+
 public class FileSimple {
     private Noeud tete = null;
     private int nbElement = 0;
@@ -67,10 +78,18 @@ public class FileSimple {
 
     }
 
+    /**
+     * Trouver si la file est vide ou s'il contient des elements
+     * @return true si elle est vide, sinon false
+     */
     public boolean estVide(){
         return !(this.nbElement > 0);
     }
 
+    /**
+     * Trouver le nombre d'elements dans la file
+     * @return nbElement, le nombre d'elements
+     */
     public int getNbElem() {
         return nbElement;
     }
