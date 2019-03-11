@@ -64,10 +64,6 @@ public abstract class TransporteurMessage extends Thread {
 		lock.lock();
 		
 		try {
-			
-			/*
-			 * (6.3.3) Insérer votre code ici 
-			 */
 
 			if(msg instanceof Nack) {
 				messageRecu.add(0, msg);
@@ -79,15 +75,19 @@ public abstract class TransporteurMessage extends Thread {
 				boolean placed = false;
 				int index =size;
 
+				//Pour placer au debut
 				if(messageRecu.isEmpty()) {
 					messageRecu.add(msg);
 					placed = true;
-				} else if (messageRecu.get(size - 1).getCompte() < msg.getCompte() &&
+				}
+				//Pour placer a la fin
+				else if (messageRecu.get(size - 1).getCompte() < msg.getCompte() &&
 						!(messageRecu.get(size -1) instanceof Nack)){
 					messageRecu.add(msg);
 					placed = true;
 				}
 
+				//On parcours le vector a partir de la fin et on arrete lorsqu'on trouve la bonne position ou un Nack
 				while (!(placed) && index > 0 ) {
 					System.out.println("index: " + index + " " + this);
 					if (messageRecu.get(index - 1) instanceof Nack) {
@@ -99,6 +99,7 @@ public abstract class TransporteurMessage extends Thread {
 						index --;
 					}
 				}
+
 				if (!(placed) && index == 0) {
 					messageRecu.add(0, msg);
 					placed = true;
@@ -125,10 +126,6 @@ public abstract class TransporteurMessage extends Thread {
 			
 			try {
 
-				/*
-				 * (6.3.4) Insérer votre code ici 
-				 */
-
 				while(!(messageRecu.isEmpty()) && !nackSent) {
 					Message msg = messageRecu.get(0);
 
@@ -141,6 +138,7 @@ public abstract class TransporteurMessage extends Thread {
 						int size = messageEnvoye.size();
 
 						for (int i = 0; i < size; i++) {
+							//Lorsqu'on trouve la position, on enleve tout les message precedent
 							if (found) {
 								messageEnvoye.remove(index + 1);
 							}else if (messageEnvoye.get(i) instanceof Nack) {
@@ -154,7 +152,9 @@ public abstract class TransporteurMessage extends Thread {
 						envoyerMessage(toSend);
 						messageRecu.remove(0);
 
-					} else if (msg.getCompte() == 9999) {
+					}
+					//Fin du deplacement
+					else if (msg.getCompte() == 9999) {
 						System.out.println("End");
 						messageRecu.remove(0);
 
