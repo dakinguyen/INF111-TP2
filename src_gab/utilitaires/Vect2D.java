@@ -1,9 +1,25 @@
 package utilitaires;
 import java.lang.Math;
 
-/**
+/** 
+ * Cette classe permet la creation d'un vecteur 2D
+ * 
+ * Service offert:
+ * - getX
+ * - getY
+ * - getLongueur
+ * - getAngle
+ * - calculerDiff
+ * - diviser
+ * - ajouter
+ * - toString
+ * - equals
+ * 
+ * @author Dat Quang Nguyen, Sara Nguyen, Emerick Paul, Gabriel Somma
+ * @version Hiver 2019
  *
  */
+
 public class Vect2D {
     private double long_x;
     private double long_y;
